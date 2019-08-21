@@ -89,17 +89,38 @@ input {
 
 .library {
     width: 75%;
-    height: 100px;
     margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .bookDisplay {
     margin: 10px;
     border: 2px solid black;
-    border-radius: 20px;
     padding: 10px;
-    min-width: 250px;
-    height: 250px;
     flex: 1;
     background-color: lightsteelblue;
+    font-size: 1em;
+    width: 250px;
+    height: 300px;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 10px 2px grey;
+}
+
+/* Table View */
+
+table {
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: yellowgreen;
 }

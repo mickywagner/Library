@@ -32,13 +32,13 @@ function render(newBook) {
     } else {
         readBox.checked = false
     }
-    
+
     bookDiv.classList.add("bookDisplay")
 
     library.appendChild(bookDiv)
     hTag.textContent = newBook.title
     pAuthor.textContent = `By: ${newBook.author}`
-    pPages.textContent = `# of Pages: ${newBook.pages}`
+    pPages.textContent = `Pages: ${newBook.pages}`
     pRead.textContent = "Read: "
     bookDiv.appendChild(hTag)
     bookDiv.appendChild(pAuthor)
@@ -96,4 +96,24 @@ function clearForm() {
     author.value = ""
     pages.value = ""
     checkBox.checked = false
+}
+
+function createTable() {
+    let rows = myLibrary
+
+    let html = "<table>";
+    html+="<tr>" + "<th>Title</th>" + "<th>Author</th>" + "<th>Pages</th>" + "<th>Read?</th>" + "<th>Delete Book</th>" + "</tr>"
+
+    for(let i = 0; i < rows.length; i++) {
+        html+="<tr>"
+        html+="<td>" + rows[i].title+"</td>"
+        html+="<td>" + rows[i].author+"</td>"
+        html+="<td>" + rows[i].pages+"</td>"
+        html+="<td>" + `<input type="checkbox" name="read" id="read">` + "</td>"
+        html+="<td>" + `<i class="fas fa-trash-alt"></i>` + "</td>"
+
+        html+="</tr>"
+    }
+    html+="</table>"
+    document.querySelector(".library").innerHTML = html;
 }
