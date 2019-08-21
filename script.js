@@ -18,6 +18,35 @@ function addBookToLibrary(book) {
     myLibrary.push(book)
 }
 
+function render(newBook) {
+    let library = document.querySelector(".library")
+    let bookDiv = document.createElement("div")
+    let hTag = document.createElement("h1")
+    let pAuthor = document.createElement("p")
+    let pPages = document.createElement("p")
+    let pRead = document.createElement("p")
+    let readBox = document.createElement("input")
+    readBox.type = "checkbox"
+    if(newBook.read == true) {
+        readBox.checked = true
+    } else {
+        readBox.checked = false
+    }
+    
+    bookDiv.classList.add("bookDisplay")
+
+    library.appendChild(bookDiv)
+    hTag.textContent = newBook.title
+    pAuthor.textContent = `By: ${newBook.author}`
+    pPages.textContent = `# of Pages: ${newBook.pages}`
+    pRead.textContent = "Read: "
+    bookDiv.appendChild(hTag)
+    bookDiv.appendChild(pAuthor)
+    bookDiv.appendChild(pPages)
+    bookDiv.appendChild(pRead)
+    pRead.appendChild(readBox)  
+}
+
 let bookModal = document.querySelector(".addBookModal")
 const newBook = document.querySelector("#newBook")
 const closeBtn = document.querySelector(".close-button")
@@ -43,7 +72,9 @@ let checkBox = document.querySelector("#read")
 
 let submitBtn = document.querySelector("input[type=submit]")
 
-submitBtn.addEventListener('click', function() {
+submitBtn.addEventListener('click', submitBook)
+
+function submitBook() {
     let bTitle = title.value
     let bAuthor = author.value
     let bPages = pages.value
@@ -54,6 +85,15 @@ submitBtn.addEventListener('click', function() {
     }
     let entry = new Book(bTitle, bAuthor, bPages, bRead)
     addBookToLibrary(entry)
+    render(entry)
     toggleModal()
-    console.log(myLibrary)
-})
+    clearForm()
+    
+}
+
+function clearForm() {
+    title.value = ""
+    author.value = ""
+    pages.value = ""
+    checkBox.checked = false
+}

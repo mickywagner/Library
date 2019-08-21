@@ -87,3 +87,19 @@ input {
     color: black;
 }
 
+.library {
+    width: 75%;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.bookDisplay {
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    min-width: 250px;
+    height: 250px;
+    flex: 1;
+    background-color: lightsteelblue;
+}
