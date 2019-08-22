@@ -18,6 +18,23 @@ function addBookToLibrary(book) {
     myLibrary.push(book)
 }
 
+function removeBookLibrary(index) {
+    myLibrary.splice(index, 1)
+}
+
+let libraryDiv = document.querySelector(".library")
+libraryDiv.addEventListener('click', deleteBookDisplay)
+
+function deleteBookDisplay(e) {
+    if(e.target && e.target.matches("i.fas")) {
+        let bookDiv = e.path[2]
+        while(bookDiv.hasChildNodes()) {
+            bookDiv.removeChild(bookDiv.firstChild)
+        }
+        libraryDiv.removeChild(bookDiv)
+    }
+}
+
 function render(newBook) {
     let library = document.querySelector(".library")
     let bookDiv = document.createElement("div")
@@ -26,6 +43,8 @@ function render(newBook) {
     let pPages = document.createElement("p")
     let pRead = document.createElement("p")
     let readBox = document.createElement("input")
+    let removeBook = document.createElement("p")
+
     readBox.type = "checkbox"
     if(newBook.read == true) {
         readBox.checked = true
@@ -40,12 +59,18 @@ function render(newBook) {
     pAuthor.textContent = `By: ${newBook.author}`
     pPages.textContent = `Pages: ${newBook.pages}`
     pRead.textContent = "Read: "
+    removeBook.innerHTML = `<i class="fas fa-trash-alt"></i>`
+
     bookDiv.appendChild(hTag)
     bookDiv.appendChild(pAuthor)
     bookDiv.appendChild(pPages)
     bookDiv.appendChild(pRead)
     pRead.appendChild(readBox)  
+    bookDiv.appendChild(removeBook)
 }
+
+
+// Submit new book modal
 
 let bookModal = document.querySelector(".addBookModal")
 const newBook = document.querySelector("#newBook")
@@ -88,7 +113,6 @@ function submitBook() {
     render(entry)
     toggleModal()
     clearForm()
-    
 }
 
 function clearForm() {
@@ -97,6 +121,8 @@ function clearForm() {
     pages.value = ""
     checkBox.checked = false
 }
+
+// Book display
 
 function createTable() {
     let rows = myLibrary
