@@ -86,11 +86,9 @@ function getStorage() {
 
 let bookModal = document.querySelector(".addBookModal")
 const newBook = document.querySelector("#newBook")
-const closeBtn = document.querySelector(".close-button")
+const closeBtn = document.querySelector("span")
 
-closeBtn.addEventListener('click', function() {
-    console.log('hey')
-})
+closeBtn.addEventListener("click", toggleModal);
 
 function toggleModal() {
     bookModal.classList.toggle("show-modal");

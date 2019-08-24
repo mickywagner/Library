@@ -72,16 +72,20 @@ h1 {
 
 .modal-content h1 {
     background-color: #0f195f;
+    padding: 2px;
+    float: right;
 }
 
 .close-button {
-    float: right;
+    left: 320px;
+    padding: 5px;
     width: 1.5rem;
     line-height: 1.5rem;
     text-align: center;
     cursor: pointer;
     border-radius: 0.25rem;
     background-color: lightgray;
+    z-index: 3;
 }
 .close-button:hover {
     background-color: darkgray;
