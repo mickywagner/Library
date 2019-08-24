@@ -39,9 +39,9 @@ function deleteBookDisplay(e) {
         while(bookDiv.hasChildNodes()) {
             bookDiv.removeChild(bookDiv.firstChild)
         }
-            libraryDiv.removeChild(bookDiv)
-        
+            createTable()
     }
+    
 }
 
 // Submit new book modal
@@ -102,10 +102,9 @@ function createTable() {
     let rows = myLibrary
     let html = "<table>";
 
-    html+="<tr>" + "<th></th>" + "<th>Title</th>" + "<th>Author</th>" + "<th>Pages</th>" + "<th>Read?</th>" + "<th>Delete Book</th>" + "</tr>"
+    html+="<tr>" + "<th>Title</th>" + "<th>Author</th>" + "<th>Pages</th>" + "<th>Read?</th>" + "<th>Delete Book</th>" + "</tr>"
     for(let i = 0; i < rows.length; i++) {
         html+=`<tr data-index="${i}" >`
-        html+= "<td>" + "</td>"
         html+="<td>" + rows[i].title+"</td>"
         html+="<td>" + rows[i].author+"</td>"
         html+="<td>" + rows[i].pages+"</td>"
@@ -121,7 +120,6 @@ function createTable() {
 // Convert this so it renders the entire library not just one book
 function render(newBook) {
     let library = document.querySelector(".library")
-
     let bookDiv = document.createElement("div")
     let hTag = document.createElement("h1")
     let pAuthor = document.createElement("p")
