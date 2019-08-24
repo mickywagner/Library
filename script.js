@@ -1,16 +1,22 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.info = function() {
-        if(this.read == false) {
-            return `${this.title} by ${this.author}, ${this.pages}, not read`
-        } else {
-            return `${this.title} by ${this.author}, ${this.pages}, read`
-        }
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = function () {
+            if (this.read == false) {
+                return `${this.title} by ${this.author}, ${this.pages}, not read`;
+            }
+            else {
+                return `${this.title} by ${this.author}, ${this.pages}, read`;
+            }
+        };
+        this.changeReadStatus = function () {
+            this.read == true ? this.read = false : this.read = true;
+        };
     }
 }
 
@@ -27,48 +33,16 @@ libraryDiv.addEventListener('click', deleteBookDisplay)
 
 function deleteBookDisplay(e) {
     if(e.target && e.target.matches("i.fas")) {
+        let libraryIndex = e.path[2].dataset.index
         let bookDiv = e.path[2]
+        removeBookLibrary(libraryIndex)
         while(bookDiv.hasChildNodes()) {
             bookDiv.removeChild(bookDiv.firstChild)
         }
-        libraryDiv.removeChild(bookDiv)
+            libraryDiv.removeChild(bookDiv)
+        
     }
 }
-
-function render(newBook) {
-    let library = document.querySelector(".library")
-    let bookDiv = document.createElement("div")
-    let hTag = document.createElement("h1")
-    let pAuthor = document.createElement("p")
-    let pPages = document.createElement("p")
-    let pRead = document.createElement("p")
-    let readBox = document.createElement("input")
-    let removeBook = document.createElement("p")
-
-    readBox.type = "checkbox"
-    if(newBook.read == true) {
-        readBox.checked = true
-    } else {
-        readBox.checked = false
-    }
-
-    bookDiv.classList.add("bookDisplay")
-
-    library.appendChild(bookDiv)
-    hTag.textContent = newBook.title
-    pAuthor.textContent = `By: ${newBook.author}`
-    pPages.textContent = `Pages: ${newBook.pages}`
-    pRead.textContent = "Read: "
-    removeBook.innerHTML = `<i class="fas fa-trash-alt"></i>`
-
-    bookDiv.appendChild(hTag)
-    bookDiv.appendChild(pAuthor)
-    bookDiv.appendChild(pPages)
-    bookDiv.appendChild(pRead)
-    pRead.appendChild(readBox)  
-    bookDiv.appendChild(removeBook)
-}
-
 
 // Submit new book modal
 
@@ -110,7 +84,7 @@ function submitBook() {
     }
     let entry = new Book(bTitle, bAuthor, bPages, bRead)
     addBookToLibrary(entry)
-    render(entry)
+    createTable()
     toggleModal()
     clearForm()
 }
@@ -126,12 +100,12 @@ function clearForm() {
 
 function createTable() {
     let rows = myLibrary
-
     let html = "<table>";
-    html+="<tr>" + "<th>Title</th>" + "<th>Author</th>" + "<th>Pages</th>" + "<th>Read?</th>" + "<th>Delete Book</th>" + "</tr>"
 
+    html+="<tr>" + "<th></th>" + "<th>Title</th>" + "<th>Author</th>" + "<th>Pages</th>" + "<th>Read?</th>" + "<th>Delete Book</th>" + "</tr>"
     for(let i = 0; i < rows.length; i++) {
-        html+="<tr>"
+        html+=`<tr data-index="${i}" >`
+        html+= "<td>" + "</td>"
         html+="<td>" + rows[i].title+"</td>"
         html+="<td>" + rows[i].author+"</td>"
         html+="<td>" + rows[i].pages+"</td>"
@@ -142,4 +116,40 @@ function createTable() {
     }
     html+="</table>"
     document.querySelector(".library").innerHTML = html;
+}
+
+// Convert this so it renders the entire library not just one book
+function render(newBook) {
+    let library = document.querySelector(".library")
+
+    let bookDiv = document.createElement("div")
+    let hTag = document.createElement("h1")
+    let pAuthor = document.createElement("p")
+    let pPages = document.createElement("p")
+    let pRead = document.createElement("p")
+    let readBox = document.createElement("input")
+    let removeBook = document.createElement("p")
+
+    readBox.type = "checkbox"
+    if(newBook.read == true) {
+        readBox.checked = true
+    } else {
+        readBox.checked = false
+    }
+
+    bookDiv.classList.add("bookDisplay")
+
+    library.appendChild(bookDiv)
+    hTag.textContent = newBook.title
+    pAuthor.textContent = `By: ${newBook.author}`
+    pPages.textContent = `Pages: ${newBook.pages}`
+    pRead.textContent = "Read: "
+    removeBook.innerHTML = `<i class="fas fa-trash-alt"></i>`
+
+    bookDiv.appendChild(hTag)
+    bookDiv.appendChild(pAuthor)
+    bookDiv.appendChild(pPages)
+    bookDiv.appendChild(pRead)
+    pRead.appendChild(readBox)  
+    bookDiv.appendChild(removeBook)
 }
