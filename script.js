@@ -44,6 +44,16 @@ function deleteBookDisplay(e) {
     
 }
 
+libraryDiv.addEventListener('click', toggleReadStatus)
+
+function toggleReadStatus(e) {
+    if(e.target && e.target.matches("#read")) {
+        let index = e.path[2].dataset.index
+        let book = myLibrary[index]
+        book.changeReadStatus()
+    }
+}
+
 // Submit new book modal
 
 let bookModal = document.querySelector(".addBookModal")
@@ -108,7 +118,11 @@ function createTable() {
         html+="<td>" + rows[i].title+"</td>"
         html+="<td>" + rows[i].author+"</td>"
         html+="<td>" + rows[i].pages+"</td>"
-        html+="<td>" + `<input type="checkbox" name="read" id="read">` + "</td>"
+        if(rows[i].read == true) {
+            html+="<td>" + `<input type="checkbox" name="read" id="read" checked>` + "</td>"
+        } else {
+            html+="<td>" + `<input type="checkbox" name="read" id="read">` + "</td>"
+        }
         html+="<td>" + `<i class="fas fa-trash-alt"></i>` + "</td>"
 
         html+="</tr>"
@@ -117,7 +131,14 @@ function createTable() {
     document.querySelector(".library").innerHTML = html;
 }
 
-// Convert this so it renders the entire library not just one book
+
+if(checkBox.checked == true) {
+    bRead = true
+} else {
+    bRead = false
+}
+
+// Convert this so it renders the entire library not just one book -- alternate display mode
 function render(newBook) {
     let library = document.querySelector(".library")
     let bookDiv = document.createElement("div")
