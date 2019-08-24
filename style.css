@@ -25,7 +25,7 @@ h1 {
     padding: 15px;
     font-family: monospace;
     font-size: 3em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 #newBook {
@@ -120,9 +120,9 @@ input {
     float: right;
 }
 
-input[type="checkbox"] {
+/* input[type="checkbox"] {
 
-}
+} */
 
 input[type="submit"] {
     height: 50px;

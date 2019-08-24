@@ -1,31 +1,33 @@
 let myLibrary = [];
 
-class Book {
-    constructor(title, author, pages, read) {
+function Book(title, author, pages, read) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.read = read;
-        this.info = function () {
-            if (this.read == false) {
-                return `${this.title} by ${this.author}, ${this.pages}, not read`;
-            }
-            else {
-                return `${this.title} by ${this.author}, ${this.pages}, read`;
-            }
-        };
-        this.changeReadStatus = function () {
-            this.read == true ? this.read = false : this.read = true;
-        };
+}
+
+Book.prototype.getInfo = function() {
+    if (this.read == false) {
+        return `${this.title} by ${this.author}, ${this.pages}, not read`;
+    } else {
+        return `${this.title} by ${this.author}, ${this.pages}, read`;
     }
 }
 
+Book.prototype.changeReadStatus = function() {
+    this.read == true ? this.read = false : this.read = true; 
+}
+
+
 function addBookToLibrary(book) {
     myLibrary.push(book)
+    populateStorage()
 }
 
 function removeBookLibrary(index) {
     myLibrary.splice(index, 1)
+    populateStorage()
 }
 
 let libraryDiv = document.querySelector(".library")
@@ -33,13 +35,14 @@ libraryDiv.addEventListener('click', deleteBookDisplay)
 
 function deleteBookDisplay(e) {
     if(e.target && e.target.matches("i.fas")) {
+
         let libraryIndex = e.path[2].dataset.index
         let bookDiv = e.path[2]
         removeBookLibrary(libraryIndex)
         while(bookDiv.hasChildNodes()) {
             bookDiv.removeChild(bookDiv.firstChild)
         }
-            createTable()
+        createTable()
     }
     
 }
@@ -51,7 +54,32 @@ function toggleReadStatus(e) {
         let index = e.path[2].dataset.index
         let book = myLibrary[index]
         book.changeReadStatus()
+        populateStorage()
     }
+}
+
+// Storage
+
+if(!localStorage.getItem('library')) {
+    populateStorage();   
+  } else {
+    getStorage()
+    createTable()
+  }
+
+function populateStorage() {
+    let myLibrarySerialized = JSON.stringify(myLibrary)
+    localStorage.setItem('library', myLibrarySerialized)
+}
+
+function getStorage() {
+    let myLibrary_Deserialized = JSON.parse(localStorage.getItem('library'))
+    let i = 0
+    while (i < myLibrary_Deserialized.length) {
+        let libBook = new Book(myLibrary_Deserialized[i].title, myLibrary_Deserialized[i].author, myLibrary_Deserialized[i].pages, myLibrary_Deserialized[i].read)
+        addBookToLibrary(libBook)
+        i++
+    }       
 }
 
 // Submit new book modal
@@ -59,6 +87,10 @@ function toggleReadStatus(e) {
 let bookModal = document.querySelector(".addBookModal")
 const newBook = document.querySelector("#newBook")
 const closeBtn = document.querySelector(".close-button")
+
+closeBtn.addEventListener('click', function() {
+    console.log('hey')
+})
 
 function toggleModal() {
     bookModal.classList.toggle("show-modal");
@@ -80,7 +112,6 @@ let pages = document.querySelector("#pages")
 let checkBox = document.querySelector("#read")
 
 let submitBtn = document.querySelector("input[type=submit]")
-
 submitBtn.addEventListener('click', submitBook)
 
 function submitBook() {
