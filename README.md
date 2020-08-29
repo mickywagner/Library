@@ -6,7 +6,7 @@
 
 <h3>About this project</h3>
 <p>A simple reading list web app. You can add and delete books, mark them as read or unread. Books are saved in your local storage.</p>
-<p>I created this for the Full Stack Javascript course of Odin Project. Full assignment <a href="https://www.theodinproject.com/courses/javascript/lessons/library?ref=lnav">here.</a>
+<p>I created this for the Full Stack Javascript course of Odin Project after the lessons focusing on objects and object construction. Full assignment <a href="https://www.theodinproject.com/courses/javascript/lessons/library?ref=lnav">here.</a>
  
 
 
